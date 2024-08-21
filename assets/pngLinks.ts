@@ -1,0 +1,1 @@
+export const calculatorIcon = require('./images/calculator.png');
