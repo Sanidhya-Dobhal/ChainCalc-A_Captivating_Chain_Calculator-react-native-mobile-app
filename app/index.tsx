@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import Buttons from "@/Components/buttons";
 import Header from "@/Components/header";
 import ScreenView from "@/Components/screenView";
@@ -8,11 +8,13 @@ export default function Index() {
   const scrollViewRef = useRef(null);
   const [ScreenState, setScreenState] = useState("");
   let [exp, setExp] = useState("");
-  const [was_op, setWas_op] = useState(0);
+  const [wasOp, setWasOp] = useState(false);
   const [retain, setRetain] = useState(false);
   const [finalRes, setFinalRes] = useState(0);
   const [color, setColor] = useState("black");
+  const deviceHeight = Dimensions.get("window").height;
   let fi1 = 0;
+
   useEffect(() => {
     if (scrollViewRef.current) scrollViewRef.current.scrollToEnd();
   }, [ScreenState]);
@@ -34,7 +36,7 @@ export default function Index() {
         if (operators_arr.includes(val.trim())) {
           setExp(finalRes as unknown as string);
           fi1 = 1;
-          setWas_op(1);
+          setWasOp(true);
         } else if (val === "=") {
           setExp(finalRes as unknown as string);
           fi1 = 1;
@@ -53,20 +55,20 @@ export default function Index() {
         }
         if (val !== "C") setScreenState(val);
         setRetain(false);
-      } else if (!operators_arr.includes(val.trim()) && was_op === 0) {
+      } else if (!operators_arr.includes(val.trim()) && wasOp === false) {
         setScreenState(ScreenState + val);
       } else {
         setScreenState(val);
-        setWas_op(1);
+        setWasOp(true);
         if (!operators_arr.includes(val.trim())) {
-          setWas_op(0);
+          setWasOp(false);
         }
       }
       if (val === "=") {
         console.log("finalRes value is ", finalRes);
+        scrollViewRef.current.scrollTo({ x: 0 });
         if (exp !== "") {
           try {
-            console.log("iddhhar");
             setScreenState(String(eval(exp)));
             setFinalRes(eval(exp));
             console.log(
@@ -102,8 +104,10 @@ export default function Index() {
   }
   return (
     <View>
-      <Header />
-      <View style={styles.calcStyle}>
+      {deviceHeight > 700 ? <Header /> : <></>}
+      <View
+        style={[styles.calcStyle, { margin: deviceHeight > 700 ? 48 : 24 }]}
+      >
         <ScreenView
           screenState={ScreenState}
           color={color}
@@ -123,7 +127,6 @@ const styles = StyleSheet.create({
     width: 330,
     height: 533,
     backgroundColor: "rgb(254,250,243)",
-    margin: 48,
     alignSelf: "center",
   },
 });
