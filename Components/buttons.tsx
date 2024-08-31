@@ -9,7 +9,7 @@ export default function Buttons({ handler }: { handler(val: any): void }) {
     ["5", "6", "-"],
     ["7", "8", "*"],
     ["9", "0", "/"],
-    [".", "="],
+    [".", "C", "="],
   ];
   let count = 0;
   return (
@@ -32,8 +32,7 @@ export default function Buttons({ handler }: { handler(val: any): void }) {
               style={[
                 styles.button,
                 {
-                  backgroundColor:
-                    val.length === 2 ? "#333230" : "rgb(236, 233, 226)",
+                  backgroundColor: val[1] === "C" ? "#cd6145" : "#ece9e2",
                   width: val.length === 2 ? 146 : 73,
                 },
               ]}
@@ -43,38 +42,35 @@ export default function Buttons({ handler }: { handler(val: any): void }) {
                 style={{
                   textAlign: "center",
                   fontSize: 30,
-                  color: val.length === 2 ? "white" : "black",
+                  color: val[1] === "C" ? "white" : "black",
                 }}
               >
                 {val[1]}
               </Text>
             </TouchableOpacity>
-            {val.length > 2 ? (
-              <TouchableOpacity
-                style={[
-                  styles.button,
-                  {
-                    backgroundColor: "#d3cfca",
-                  },
-                ]}
-                onPress={() => handler(val[2])}
-              >
-                {val[2] === "backspace" ? (
-                  <Image source={backspace} style={{ width: 30, height: 30 }} />
-                ) : (
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontSize: 30,
-                    }}
-                  >
-                    {val[2]}
-                  </Text>
-                )}
-              </TouchableOpacity>
-            ) : (
-              <></>
-            )}
+            <TouchableOpacity
+              style={[
+                styles.button,
+                {
+                  backgroundColor: val[2] === "=" ? "#333230" : "#d3cfca",
+                },
+              ]}
+              onPress={() => handler(val[2])}
+            >
+              {val[2] === "backspace" ? (
+                <Image source={backspace} style={{ width: 30, height: 30 }} />
+              ) : (
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 30,
+                    color: val[2] === "=" ? "white" : "black",
+                  }}
+                >
+                  {val[2]}
+                </Text>
+              )}
+            </TouchableOpacity>
           </View>
         );
       })}

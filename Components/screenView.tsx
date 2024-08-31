@@ -19,9 +19,10 @@ export default function ScreenView({
       >
         <Text
           style={{
-            fontSize: 34.5,
+            fontSize: screenState === "Enter number" ? 32.5 : 34.5,
             color: color,
             textAlignVertical: "center",
+            marginRight: screenState === "Enter number" ? 0 : 16,
           }}
         >
           {screenState}

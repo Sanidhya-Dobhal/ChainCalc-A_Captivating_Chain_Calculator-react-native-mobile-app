@@ -23,13 +23,14 @@ export default function Index() {
     }
   }, [ScreenState]);
   function handler(val: string) {
+    console.log("val at top", val);
     isEqualPressed.current = false;
     console.log(typeof val);
     let operators_arr = ["+", "-", "*", "/"];
     setColor("black");
     if (ScreenState === "Syntax Error" || ScreenState === "Enter number") {
       if (operators_arr.includes(val.trim()) || val === "=") {
-        isEqualPressed.current = true;
+        if (val === "=") isEqualPressed.current = true;
         setScreenState("Enter number");
       } else if (val === "backspace") {
         setScreenState("");
@@ -106,6 +107,13 @@ export default function Index() {
       }
       console.log(exp);
       console.log("The expression right now : ", exp);
+    }
+    if (val === "C") {
+      setScreenState("");
+      setExp("");
+      setColor("black");
+      setRetain(false);
+      setFinalRes(0);
     }
   }
   return (

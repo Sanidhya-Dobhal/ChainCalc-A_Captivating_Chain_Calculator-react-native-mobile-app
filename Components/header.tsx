@@ -1,7 +1,6 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import { calculatorIcon } from "../assets/pngLinks";
-import { BackspaceIcon } from "../Images/";
+import { calculatorIcon } from "../Images";
 
 export default function Header() {
   return (
