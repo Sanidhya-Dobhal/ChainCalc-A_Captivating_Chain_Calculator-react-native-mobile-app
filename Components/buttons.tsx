@@ -1,9 +1,10 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import React from "react";
+import { backspace } from "@/Images";
 
 export default function Buttons({ handler }: { handler(val: any): void }) {
   let arr = [
-    ["1", "2", "C"],
+    ["1", "2", "backspace"],
     ["3", "4", "+"],
     ["5", "6", "-"],
     ["7", "8", "*"],
@@ -53,20 +54,23 @@ export default function Buttons({ handler }: { handler(val: any): void }) {
                 style={[
                   styles.button,
                   {
-                    backgroundColor: val[2] === "C" ? "#0051ff" : "#d3cfca",
+                    backgroundColor: "#d3cfca",
                   },
                 ]}
                 onPress={() => handler(val[2])}
               >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 30,
-                    color: val[2] === "C" ? "#fff" : "",
-                  }}
-                >
-                  {val[2]}
-                </Text>
+                {val[2] === "backspace" ? (
+                  <Image source={backspace} style={{ width: 30, height: 30 }} />
+                ) : (
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 30,
+                    }}
+                  >
+                    {val[2]}
+                  </Text>
+                )}
               </TouchableOpacity>
             ) : (
               <></>

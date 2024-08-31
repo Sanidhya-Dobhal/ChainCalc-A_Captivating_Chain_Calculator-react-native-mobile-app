@@ -1,9 +1,8 @@
-import { StyleSheet, View, Dimensions } from "react-native";
+import { StyleSheet, View, Dimensions, Image } from "react-native";
 import Buttons from "@/Components/buttons";
 import Header from "@/Components/header";
 import ScreenView from "@/Components/screenView";
 import { useEffect, useRef, useState } from "react";
-
 export default function Index() {
   const scrollViewRef = useRef(null);
   const [ScreenState, setScreenState] = useState("");
@@ -12,20 +11,27 @@ export default function Index() {
   const [retain, setRetain] = useState(false);
   const [finalRes, setFinalRes] = useState(0);
   const [color, setColor] = useState("black");
+  const isEqualPressed = useRef(false);
   const deviceHeight = Dimensions.get("window").height;
   let fi1 = 0;
 
   useEffect(() => {
-    if (scrollViewRef.current) scrollViewRef.current.scrollToEnd();
+    if (isEqualPressed.current) {
+      if (scrollViewRef.current) scrollViewRef.current.scrollTo({ x: 0 });
+    } else {
+      if (scrollViewRef.current) scrollViewRef.current.scrollToEnd();
+    }
   }, [ScreenState]);
   function handler(val: string) {
+    isEqualPressed.current = false;
     console.log(typeof val);
     let operators_arr = ["+", "-", "*", "/"];
     setColor("black");
     if (ScreenState === "Syntax Error" || ScreenState === "Enter number") {
       if (operators_arr.includes(val.trim()) || val === "=") {
+        isEqualPressed.current = true;
         setScreenState("Enter number");
-      } else if (val === "C") {
+      } else if (val === "backspace") {
         setScreenState("");
       } else {
         setScreenState(val);
@@ -38,9 +44,10 @@ export default function Index() {
           fi1 = 1;
           setWasOp(true);
         } else if (val === "=") {
+          isEqualPressed.current = true;
           setExp(finalRes as unknown as string);
           fi1 = 1;
-        } else if (val === "C") {
+        } else if (val === "backspace") {
           console.log(
             "expression after C is ",
             String(finalRes).substring(0, String(finalRes).length - 1)
@@ -53,7 +60,7 @@ export default function Index() {
           exp =
             String(finalRes).substring(0, String(finalRes).length - 1) + " "; //The " " is added because I know that the control of the code will go in a piece of code where the exp's last digit will be trimmed again therefore when that happens no data is lost and " " is trimmed
         }
-        if (val !== "C") setScreenState(val);
+        if (val !== "backspace") setScreenState(val);
         setRetain(false);
       } else if (!operators_arr.includes(val.trim()) && wasOp === false) {
         setScreenState(ScreenState + val);
@@ -65,8 +72,7 @@ export default function Index() {
         }
       }
       if (val === "=") {
-        console.log("finalRes value is ", finalRes);
-        scrollViewRef.current.scrollTo({ x: 0 });
+        isEqualPressed.current = true;
         if (exp !== "") {
           try {
             setScreenState(String(eval(exp)));
@@ -84,7 +90,7 @@ export default function Index() {
         } else {
           setScreenState(ScreenState);
         }
-      } else if (val === "C") {
+      } else if (val === "backspace") {
         if (String(ScreenState).length > 0) {
           setScreenState(
             String(ScreenState).substring(0, String(ScreenState).length - 1)
