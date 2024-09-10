@@ -1,4 +1,12 @@
-import { StyleSheet, View, Dimensions, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  Image,
+  Linking,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import Buttons from "@/Components/buttons";
 import Header from "@/Components/header";
 import ScreenView from "@/Components/screenView";
@@ -129,6 +137,17 @@ export default function Index() {
         />
         <Buttons handler={handler} />
       </View>
+      <TouchableOpacity
+        onPress={() =>
+          Linking.openURL(
+            "https://sanidhya-dobhal.github.io/ChainCalc-A_Captivating_Chain_Calculator/"
+          )
+        }
+      >
+        <Text style={{ alignSelf: "center", color: "#1a73e8" }}>
+          Check out the web app for more information
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
