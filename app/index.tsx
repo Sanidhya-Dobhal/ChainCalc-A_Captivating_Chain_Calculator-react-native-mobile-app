@@ -2,7 +2,7 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  Image,
+  ScrollView,
   Linking,
   Text,
   TouchableOpacity,
@@ -12,7 +12,7 @@ import Header from "@/Components/header";
 import ScreenView from "@/Components/screenView";
 import { useEffect, useRef, useState } from "react";
 export default function Index() {
-  const scrollViewRef = useRef(null);
+  const scrollViewRef = useRef<ScrollView | null>(null);
   const [ScreenState, setScreenState] = useState("");
   let [exp, setExp] = useState("");
   const [wasOp, setWasOp] = useState(false);
@@ -113,8 +113,6 @@ export default function Index() {
           setExp(finalRes + val);
         } else setExp(exp + val); //Adding the numbers to exp string
       }
-      console.log(exp);
-      console.log("The expression right now : ", exp);
     }
     if (val === "C") {
       setScreenState("");

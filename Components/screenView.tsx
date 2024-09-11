@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, TextInput, ScrollView } from "react-native";
-import React, { useRef } from "react";
+import { View, Text, StyleSheet, ScrollView, Platform } from "react-native";
+import React from "react";
 export default function ScreenView({
   screenState,
   color,
@@ -7,7 +7,7 @@ export default function ScreenView({
 }: {
   screenState: string;
   color: string;
-  scrollViewRef: React.MutableRefObject<null>;
+  scrollViewRef: React.MutableRefObject<null | ScrollView>;
 }) {
   return (
     <View style={styles.screenStyles}>
@@ -22,6 +22,7 @@ export default function ScreenView({
             fontSize: screenState === "Enter number" ? 32.5 : 34.5,
             color: color,
             textAlignVertical: "center",
+            marginVertical: Platform.OS === "ios" ? 14 : 0,
             marginRight: screenState === "Enter number" ? 0 : 16,
           }}
         >

@@ -11,7 +11,6 @@ export default function Buttons({ handler }: { handler(val: any): void }) {
     ["9", "0", "/"],
     [".", "C", "="],
   ];
-  let count = 0;
   return (
     <View style={styles.buttonGrid}>
       {arr.map((val, index) => {
